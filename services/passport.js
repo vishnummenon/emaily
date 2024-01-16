@@ -31,15 +31,13 @@ passport.use(
 
             if (existingUser) {
                 //user already exists. Need not save again
-                done(null, existingUser);
-            } else {
-                // New user. Create a new record in DB
-                const newUser = await new User({
-                    googleId: profile.id
-                }).save();
-
-                done(null, newUser);
+                return done(null, existingUser);
             }
+            
+            // New user. Create a new record in DB
+            const newUser = await new User({googleId: profile.id}).save();
+
+            done(null, newUser);
         }
     )
 );
